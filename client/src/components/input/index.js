@@ -7,7 +7,6 @@ const Input = ({
   title,
   errorMessage,
   styleChangeWidth,
-  styleChangeHeight,
 }) => {
   return (
     <div

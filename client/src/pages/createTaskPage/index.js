@@ -5,6 +5,7 @@ import styles from "./index.module.css";
 import { useForm } from "react-hook-form";
 import { dueDateValidation } from "../../utils/inputValidationsTask";
 import dataService from "../../services/dataService";
+import Select from "../../components/select";
 const CreateTaskPage = () => {
   const [employees, setEmployees] = useState([]);
   const {
@@ -12,12 +13,13 @@ const CreateTaskPage = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const handleInputs = () => {};
+  const handleInputs = (data) => {
+    console.log(data);
+  };
   const handleGetEmployees = async () => {
     const promise = await fetch("http://localhost:9000/api/employee/employees");
     const response = await promise.json();
     setEmployees(response);
-    
   };
   useEffect(() => {
     handleGetEmployees();
@@ -49,15 +51,12 @@ const CreateTaskPage = () => {
               }
               styleChangeWidth={true}
             />
-            <Input
+            <Select
               name="assignedTo"
-              formHook={register("assignedTo", {
-                required: "This field is required",
-              })}
-              type="text"
+              formHook={register("assignedTo")}
               title="Assigned To"
               errorMessage={errors.assignedTo ? errors.assignedTo.message : ""}
-              styleChangeWidth={true}
+              options={employees}
             />
             <Input
               name="dueDate"
