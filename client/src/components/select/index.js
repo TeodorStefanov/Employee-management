@@ -4,6 +4,7 @@ const Select = ({ name, formHook, title, errorMessage, options }) => {
   return (
     <div className={styles.container}>
       <select {...formHook} id={name} className={styles.field}>
+        <option value="DEFAULT" ></option>
         {options.map((el, index) => {
           return (
             <option value={el.id} key={index}>
