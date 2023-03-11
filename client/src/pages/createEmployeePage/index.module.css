@@ -1,0 +1,48 @@
+.container {
+  width: 50%;
+  height: 40%;
+  border: solid 1px #052f56;
+  background-color: rgb(255, 255, 255);
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.title {
+  margin: 0;
+}
+.fullName {
+  margin: 20px;
+  margin-bottom: 40px;
+  box-sizing: border-box;
+  border-top: solid 1px;
+  text-align: left;
+}
+.titles {
+  margin-top: 20px;
+  font-weight: bold;
+}
+.collectionInputs {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+  box-sizing: border-box;
+}
+.twoTwo {
+  margin: 20px;
+  margin-bottom: 40px;
+  box-sizing: border-box;
+  text-align: left;
+}
+.submitButton {
+  margin: 20px;
+  box-sizing: border-box;
+  width: 100px;
+  height: 32px;
+  color: rgb(255, 255, 255);
+  background-color: #052f56;
+  border: solid 1px #052f56;
+}
+.submitButton:hover {
+  background-color: #185690;
+  border: solid 1px #185690;
+}
