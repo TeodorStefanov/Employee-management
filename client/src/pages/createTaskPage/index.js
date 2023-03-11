@@ -38,7 +38,7 @@ const CreateTaskPage = () => {
   };
   useEffect(() => {
     handleGetEmployees();
-  }, []);
+  }, [])
   return (
     <PageLayout>
       <div className={styles.container}>

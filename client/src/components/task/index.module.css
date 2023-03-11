@@ -1,0 +1,38 @@
+.container {
+  width: 95%;
+  min-height: 100px;
+  border: solid 1px white;
+  background-color: white;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.container:hover {
+  background-color: rgb(241, 241, 235);
+  border: solid 1px rgb(221, 221, 217);
+}
+.title {
+  font-weight: bold;
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  margin: 0;
+  word-break: break-word;
+}
+.name {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  margin: 0;
+  word-break: break-word;
+}
+
+.date {
+  box-sizing: border-box;
+  padding-left: 58%;
+  margin: 0;
+  color: green;
+}
+.dateColor {
+  font-weight: bold;
+  color: rgb(255, 0, 0);
+}

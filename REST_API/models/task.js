@@ -12,7 +12,7 @@ const TaskSchema = new mongoose.Schema({
   },
   assignedTo: {
     type: mongoose.SchemaTypes.ObjectId,
-    ref: "User",
+    ref: "Employee",
     required: true,
   },
   dueDate: {
