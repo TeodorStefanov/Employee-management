@@ -19,6 +19,20 @@ module.exports = {
         res.status(500).send({ error: "There is an error" });
       }
     },
+    employee: async (req, res, next) => {
+      const employeeId = req.query.id;
+      console.log(employeeId);
+      if (employeeId) {
+        try {
+          await models.employee.findById(employeeId);
+          res.status(200).send({ message: "Employee is checked" });
+        } catch (err) {
+          res.status(401).send({ error: "Please enter valid Employee" });
+        }
+      } else {
+        res.status(401).send({ error: "Please enter valid Employee" });
+      }
+    },
   },
   post: {
     create: async (req, res, next) => {
@@ -39,7 +53,6 @@ module.exports = {
         dateOfBirth &&
         monthlySalary
       ) {
-        console.log(middleNames);
         try {
           const user = await models.employee.create({
             firstName,
@@ -51,7 +64,7 @@ module.exports = {
             monthlySalary,
           });
 
-          res.status(200).send(user);
+          res.status(200).send({message: 'Successfully create Employee'});
         } catch (err) {
           console.log(err);
           res.status(500).send(err);

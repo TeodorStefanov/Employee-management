@@ -1,7 +1,7 @@
 import React from "react";
 import PageLayout from "../../components/pageLayout";
 import styles from "./index.module.css";
-import { useForm } from "react-hook-form"
+import { useForm } from "react-hook-form";
 import Input from "../../components/input";
 import {
   dateOfBirthValidation,
@@ -10,12 +10,14 @@ import {
   salaryValidation,
 } from "../../utils/inputValidationsEmployee";
 import dataService from "../../services/dataService";
+import { useNavigate } from "react-router-dom";
 const CreateEmployeePage = () => {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm()
+  } = useForm();
   const handleInputs = async (data) => {
     console.log(data);
     const promise = await dataService({
@@ -23,9 +25,11 @@ const CreateEmployeePage = () => {
       url: "employee/create",
       data: data,
     });
-
-    const response = await promise.json();
-    console.log(response);
+    if (promise.status === 200) {
+      navigate("/");
+    } else {
+      navigate("/error");
+    }
   };
   return (
     <PageLayout>

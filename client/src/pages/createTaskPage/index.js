@@ -3,18 +3,33 @@ import Input from "../../components/input";
 import PageLayout from "../../components/pageLayout";
 import styles from "./index.module.css";
 import { useForm } from "react-hook-form";
-import { dueDateValidation } from "../../utils/inputValidationsTask";
+import {
+  assignedToValidation,
+  dueDateValidation,
+} from "../../utils/inputValidationsTask";
 import dataService from "../../services/dataService";
 import Select from "../../components/select";
+import { useNavigate } from "react-router-dom";
 const CreateTaskPage = () => {
   const [employees, setEmployees] = useState([]);
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const handleInputs = (data) => {
-    console.log(data);
+  const handleInputs = async (data) => {
+    const promise = await dataService({
+      method: "POST",
+      url: "task/create",
+      data: data,
+    });
+    console.log(promise);
+    if (promise.status === 200) {
+      navigate("/");
+    } else {
+      navigate("/error");
+    }
   };
   const handleGetEmployees = async () => {
     const promise = await fetch("http://localhost:9000/api/employee/employees");
@@ -43,7 +58,9 @@ const CreateTaskPage = () => {
             />
             <Input
               name="description"
-              formHook={register("description")}
+              formHook={register("description", {
+                required: "This field is required",
+              })}
               type="text"
               title="Description"
               errorMessage={
@@ -53,7 +70,12 @@ const CreateTaskPage = () => {
             />
             <Select
               name="assignedTo"
-              formHook={register("assignedTo")}
+              formHook={register("assignedTo", {
+                required: "This field is required",
+                validate: (val) => {
+                  return assignedToValidation(val);
+                },
+              })}
               title="Assigned To"
               errorMessage={errors.assignedTo ? errors.assignedTo.message : ""}
               options={employees}
