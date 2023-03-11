@@ -29,4 +29,14 @@ module.exports = {
       }
     },
   },
+  get: {
+    getTasks: async (req, res, next) => {
+      try {
+        const tasks = await models.task.find().populate("assignedTo");
+        res.status(200).send(tasks);
+      } catch (err) {
+        res.status(500).send(err);
+      }
+    },
+  },
 };
