@@ -2,6 +2,7 @@ const controllers = require("../controllers/");
 const router = require("express").Router();
 
 router.get("/employees", controllers.employee.get.getEmployees);
+router.get("/allEmployees", controllers.employee.get.getAllEmployees);
 router.get("/employee", controllers.employee.get.getEmployee);
 router.get("/statistic", controllers.employee.get.getStatistic);
 router.post("/create", controllers.employee.post.create);

@@ -1,0 +1,21 @@
+.container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  gap: 12px;
+  border-bottom: solid 1px #f1f3f4;
+  background-color: white;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+  border: solid 1px white;
+}
+.title {
+  font-size: 12px;
+  border: solid 1px white;
+  background-color: white;
+  padding: 10px;
+  box-sizing: border-box;
+  width: 15%;
+  word-break: break-word;
+  cursor: pointer;
+}
