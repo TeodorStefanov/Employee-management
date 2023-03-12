@@ -61,7 +61,7 @@ const TaskPage = () => {
     } else {
       navigate("/error");
     }
-  };
+  }
   useEffect(() => {
     checkTask();
   }, []);
@@ -71,13 +71,13 @@ const TaskPage = () => {
       <div className={styles.container}>
         <div className={styles.main}>
           <p>
-            <b>Title</b> {title}
+            <b>Title:</b> {title}
           </p>
           <p>
-            <b>Description</b> {description}
+            <b>Description:</b> {description}
           </p>
           <p>
-            <b>Assigned To</b>{" "}
+            <b>Assigned To:</b>{" "}
             <span
               onClick={() => navigate(`/employees/${employeeId}`)}
               className={styles.span}
@@ -87,11 +87,11 @@ const TaskPage = () => {
           </p>
           {completedTask ? (
             <p>
-              <b>Completed Date</b> {completedDate}
+              <b>Completed Date:</b> {completedDate}
             </p>
           ) : (
             <p>
-              <b>Due Date</b> {dueDate}
+              <b>Due Date:</b> {dueDate}
             </p>
           )}
           <div className={styles.buttons}>

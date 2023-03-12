@@ -55,7 +55,7 @@ const EditTaskPage = () => {
     } else {
       navigate("/error");
     }
-  };
+  }
   const handleInputs = async (data) => {
     data["id"] = task._id;
     const promise = await dataService({
@@ -135,4 +135,4 @@ const EditTaskPage = () => {
     </PageLayout>
   );
 };
-export default EditTaskPage;
+export default EditTaskPage
