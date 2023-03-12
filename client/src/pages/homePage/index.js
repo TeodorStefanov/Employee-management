@@ -30,7 +30,6 @@ const HomePage = () => {
                   key={index}
                   dueDate={el.dueDate}
                   taskId={el._id}
-                  employeeId={el.assignedTo._id}
                 />
               );
             })}
@@ -47,7 +46,7 @@ const HomePage = () => {
                   key={index}
                   dueDate={el.dueDate}
                   taskId={el._id}
-                  employeeId={el.assignedTo._id}
+                  completedDate={el.completedDate}
                 />
               );
             })}

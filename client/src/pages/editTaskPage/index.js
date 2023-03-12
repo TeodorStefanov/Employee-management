@@ -1,27 +1,66 @@
 import React, { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { useNavigate, useParams } from "react-router-dom";
 import Input from "../../components/input";
 import PageLayout from "../../components/pageLayout";
-import styles from "./index.module.css";
-import { useForm } from "react-hook-form";
+import Select from "../../components/select";
+import TextArea from "../../components/textarea";
+import dataService from "../../services/dataService";
 import {
   assignedToValidation,
   dueDateValidation,
 } from "../../utils/inputValidationsTask";
-import dataService from "../../services/dataService";
-import Select from "../../components/select";
-import { useNavigate } from "react-router-dom";
-const CreateTaskPage = () => {
+import styles from "./index.module.css";
+const EditTaskPage = () => {
+  const [task, setTask] = useState({});
   const [employees, setEmployees] = useState([]);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
   const navigate = useNavigate();
+  const params = useParams();
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      title: "",
+      description: "",
+    },
+  });
+  const checkTask = async () => {
+    const id = params.id;
+    const promiseTask = await fetch(
+      `http://localhost:9000/api/task/task?id=${id}`
+    );
+    if (promiseTask.status !== 200) {
+      navigate("/error");
+    } else {
+      const response = await promiseTask.json();
+      setTask(() => ({
+        ...response,
+      }));
+      reset(response);
+
+      setTitle(response.title);
+      setDescription(response.description);
+    }
+    const promiseEmployees = await fetch(
+      "http://localhost:9000/api/employee/employees"
+    );
+    if (promiseEmployees.status === 200) {
+      const responseEmployees = await promiseEmployees.json();
+      setEmployees(responseEmployees);
+    } else {
+      navigate("/error");
+    }
+  };
   const handleInputs = async (data) => {
+    data["id"] = task._id;
     const promise = await dataService({
-      method: "POST",
-      url: "task/create",
+      method: "PUT",
+      url: "task/update",
       data: data,
     });
     if (promise.status === 200) {
@@ -30,18 +69,13 @@ const CreateTaskPage = () => {
       navigate("/error");
     }
   };
-  const handleGetEmployees = async () => {
-    const promise = await fetch("http://localhost:9000/api/employee/employees");
-    const response = await promise.json();
-    setEmployees(response);
-  };
   useEffect(() => {
-    handleGetEmployees();
-  }, []);
+    checkTask();
+  }, [reset]);
   return (
     <PageLayout>
       <div className={styles.container}>
-        <h1 className={styles.title}>Create Task</h1>
+        <h1 className={styles.title}>Edit Task</h1>
         <p>Please complete the form below.</p>
         <form onSubmit={handleSubmit(handleInputs)} className={styles.form}>
           <div className={styles.middleInputs}>
@@ -55,7 +89,7 @@ const CreateTaskPage = () => {
               errorMessage={errors.title ? errors.title.message : ""}
               styleChangeWidth={true}
             />
-            <Input
+            <TextArea
               name="description"
               formHook={register("description", {
                 required: "This field is required",
@@ -101,4 +135,4 @@ const CreateTaskPage = () => {
     </PageLayout>
   );
 };
-export default CreateTaskPage;
+export default EditTaskPage;
