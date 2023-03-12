@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./index.module.css";
-const TextArea = ({ name, formHook, title, errorMessage, value }) => {
+const TextArea = ({ name, formHook, title, errorMessage }) => {
   return (
     <div className={styles.container}>
       <textarea {...formHook} id={name} className={styles.field}></textarea>

@@ -67,61 +67,65 @@ const EmployeePage = () => {
   }, []);
   return (
     <PageLayout>
-      <div className={styles.container}>
-        <div className={styles.main}>
-          <p>
-            <b>Full Name:</b>{" "}
-            {`${employee.firstName} ${
-              employee.middleNames && employee.middleNames
-            } ${employee.lastName}`}
-          </p>
-          <p>
-            <b>Date of Birth:</b>{" "}
-            {new Date(employee.dateOfBirth).toLocaleDateString()}
-          </p>
-          <p>
-            <b>Email:</b> {employee.email}
-          </p>
-          <p>
-            <b>Phone Number: </b>
-            {employee.phoneNumber}
-          </p>
+      {!employee ? (
+        <div>Loading...</div>
+      ) : (
+        <div className={styles.container}>
+          <div className={styles.main}>
+            <p>
+              <b>Full Name:</b>{" "}
+              {`${employee.firstName} ${
+                employee.middleNames && employee.middleNames
+              } ${employee.lastName}`}
+            </p>
+            <p>
+              <b>Date of Birth:</b>{" "}
+              {new Date(employee.dateOfBirth).toLocaleDateString()}
+            </p>
+            <p>
+              <b>Email:</b> {employee.email}
+            </p>
+            <p>
+              <b>Phone Number: </b>
+              {employee.phoneNumber}
+            </p>
 
-          <p>
-            <b>Salary:</b> {employee.monthlySalary} BGN
-          </p>
-          <div>
-            <b>Assigned Tasks:</b>
-            {tasksOfEmployee.map((el, index) => {
-              return (
-                <p
-                  key={index}
-                  onClick={() => navigate(`/tasks/${el._id}`)}
-                  className={styles.task}
-                >
-                  {el.title}
-                </p>
-              );
-            })}
-          </div>
-          <div className={styles.buttons}>
-            <button
-              type="submit"
-              className={styles.button}
-              onClick={() => navigate(`/employee/edit/${employee._id}`)}
-            >
-              Edit
-            </button>
-            <button
-              type="submit"
-              className={styles.button}
-              onClick={handleDeleteEmployee}
-            >
-              Delete
-            </button>
+            <p>
+              <b>Salary:</b> {employee.monthlySalary} BGN
+            </p>
+            <div>
+              <b>Assigned Tasks:</b>
+              {tasksOfEmployee.map((el, index) => {
+                return (
+                  <p
+                    key={index}
+                    onClick={() => navigate(`/tasks/${el._id}`)}
+                    className={styles.task}
+                  >
+                    {el.title}
+                  </p>
+                );
+              })}
+            </div>
+            <div className={styles.buttons}>
+              <button
+                type="submit"
+                className={styles.button}
+                onClick={() => navigate(`/employee/edit/${employee._id}`)}
+              >
+                Edit
+              </button>
+              <button
+                type="submit"
+                className={styles.button}
+                onClick={handleDeleteEmployee}
+              >
+                Delete
+              </button>
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </PageLayout>
   );
 };

@@ -4,7 +4,7 @@ import MenuLink from "../menuLink";
 import styles from "./index.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const Menu = () => {
   const [openMenu, setOpenMenu] = useState(false);
   const menuRef = useRef();
@@ -30,9 +30,11 @@ const Menu = () => {
         />
       </div>
       <nav className={styles.navigation}>
-        {links.map((el, index) => {
-          return <MenuLink href={el.link} title={el.title} key={index} />;
-        })}
+        <div className={styles.container}>
+          <Link to="/employees" className={styles.link}>
+            Employees
+          </Link>
+        </div>
       </nav>
       <div className={styles.createMenu}>
         <button

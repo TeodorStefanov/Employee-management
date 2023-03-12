@@ -34,6 +34,32 @@ module.exports = {
         res.status(401).send({ error: "Please enter valid Employee" });
       }
     },
+    getStatistic: async (req, res, next) => {
+      try {
+        const date = new Date();
+        const monthNow = date.getMonth();
+        const yearNow = date.getFullYear();
+
+        const employees = (await models.employee.find())
+          .map((el) => {
+            el.completedTasks = el.completedTasks.filter((le) => {
+              let month = le.getMonth();
+              let year = le.getFullYear();
+
+              return monthNow - 1 === month && yearNow === year;
+            });
+            return el;
+          })
+          .sort((a, b) => b.completedTasks.length - a.completedTasks.length)
+          .filter((je) => {
+            return je.completedTasks.length > 0;
+          })
+          .slice(0, 5);
+        res.status(200).send(employees);
+      } catch (err) {
+        res.status(500).send(err);
+      }
+    },
   },
   post: {
     create: async (req, res, next) => {

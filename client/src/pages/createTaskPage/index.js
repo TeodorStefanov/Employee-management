@@ -10,6 +10,7 @@ import {
 import dataService from "../../services/dataService";
 import Select from "../../components/select";
 import { useNavigate } from "react-router-dom";
+import TextArea from "../../components/textarea";
 const CreateTaskPage = () => {
   const [employees, setEmployees] = useState([]);
   const navigate = useNavigate();
@@ -55,12 +56,11 @@ const CreateTaskPage = () => {
               errorMessage={errors.title ? errors.title.message : ""}
               styleChangeWidth={true}
             />
-            <Input
+            <TextArea
               name="description"
               formHook={register("description", {
                 required: "This field is required",
               })}
-              type="text"
               title="Description"
               errorMessage={
                 errors.description ? errors.description.message : ""
