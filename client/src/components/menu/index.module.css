@@ -11,6 +11,12 @@
   align-items: center;
   height: 40px;
 }
+
+.link {
+  color: rgb(255, 255, 255);
+  text-decoration: none;
+}
+
 .createMenu {
   position: relative;
 }

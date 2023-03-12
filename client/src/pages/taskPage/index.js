@@ -61,70 +61,74 @@ const TaskPage = () => {
     } else {
       navigate("/error");
     }
-  }
+  };
   useEffect(() => {
     checkTask();
   }, []);
-  
+
   return (
     <PageLayout>
-      <div className={styles.container}>
-        <div className={styles.main}>
-          <p>
-            <b>Title:</b> {title}
-          </p>
-          <p>
-            <b>Description:</b> {description}
-          </p>
-          <p>
-            <b>Assigned To:</b>{" "}
-            <span
-              onClick={() => navigate(`/employees/${employeeId}`)}
-              className={styles.span}
-            >
-              {assignedTo}
-            </span>
-          </p>
-          {completedTask ? (
+      {!taskId ? (
+        <div>Loading....</div>
+      ) : (
+        <div className={styles.container}>
+          <div className={styles.main}>
             <p>
-              <b>Completed Date:</b> {completedDate}
+              <b>Title:</b> {title}
             </p>
-          ) : (
             <p>
-              <b>Due Date:</b> {dueDate}
+              <b>Description:</b> {description}
             </p>
-          )}
-          <div className={styles.buttons}>
-            {!completedTask ? (
-              <>
-                <button
-                  type="submit"
-                  className={styles.button}
-                  onClick={() => navigate(`/task/edit/${taskId}`)}
-                >
-                  Edit
-                </button>
-                <button
-                  type="submit"
-                  className={styles.button}
-                  onClick={handleCompletedTask}
-                >
-                  Completed
-                </button>{" "}
-              </>
+            <p>
+              <b>Assigned To:</b>{" "}
+              <span
+                onClick={() => navigate(`/employees/${employeeId}`)}
+                className={styles.span}
+              >
+                {assignedTo}
+              </span>
+            </p>
+            {completedTask ? (
+              <p>
+                <b>Completed Date:</b> {completedDate}
+              </p>
             ) : (
-              ""
+              <p>
+                <b>Due Date:</b> {dueDate}
+              </p>
             )}
-            <button
-              type="submit"
-              className={styles.button}
-              onClick={handleDeleteTask}
-            >
-              Delete
-            </button>
+            <div className={styles.buttons}>
+              {!completedTask ? (
+                <>
+                  <button
+                    type="submit"
+                    className={styles.button}
+                    onClick={() => navigate(`/task/edit/${taskId}`)}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    type="submit"
+                    className={styles.button}
+                    onClick={handleCompletedTask}
+                  >
+                    Completed
+                  </button>{" "}
+                </>
+              ) : (
+                ""
+              )}
+              <button
+                type="submit"
+                className={styles.button}
+                onClick={handleDeleteTask}
+              >
+                Delete
+              </button>
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </PageLayout>
   );
 };

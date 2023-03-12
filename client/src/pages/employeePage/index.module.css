@@ -23,6 +23,8 @@
 }
 .buttons {
   display: flex;
+  margin-top: 20px;
+  box-sizing: border-box;
 }
 .button {
   text-align: center;
