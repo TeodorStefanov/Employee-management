@@ -1,7 +1,7 @@
 const models = require("../models");
 module.exports = {
   get: {
-    employees: async (req, res, next) => {
+    getEmployees: async (req, res, next) => {
       try {
         const users = await models.employee.find();
 
@@ -19,12 +19,14 @@ module.exports = {
         res.status(500).send({ error: "There is an error" });
       }
     },
-    employee: async (req, res, next) => {
+    getEmployee: async (req, res, next) => {
       const employeeId = req.query.id;
       if (employeeId) {
         try {
-          await models.employee.findById(employeeId);
-          res.status(200).send({ message: "Employee is checked" });
+          const employee = await models.employee
+            .findById(employeeId)
+            .populate("assignedTasks");
+          res.status(200).send(employee);
         } catch (err) {
           res.status(401).send({ error: "Please enter valid Employee" });
         }
@@ -64,6 +66,51 @@ module.exports = {
           });
 
           res.status(200).send({ message: "Successfully create Employee" });
+        } catch (err) {
+          res.status(500).send(err);
+        }
+      } else {
+        res.status(401).send({ error: "Please enter valid credentials" });
+      }
+    },
+  },
+  put: {
+    updateEmployee: async (req, res, next) => {
+      const {
+        id,
+        firstName,
+        middleNames,
+        lastName,
+        email,
+        phoneNumber,
+        dateOfBirth,
+        monthlySalary,
+      } = req.body;
+      if (
+        id &&
+        firstName &&
+        lastName &&
+        email &&
+        phoneNumber &&
+        dateOfBirth &&
+        monthlySalary
+      ) {
+        try {
+          const user = await models.employee.findOneAndUpdate(
+            { _id: id },
+            {
+              firstName,
+              lastName,
+              middleNames,
+              email,
+              phoneNumber,
+              dateOfBirth,
+              monthlySalary,
+            },
+            { new: true }
+          );
+
+          res.status(200).send({ message: "Successfully update Employee" });
         } catch (err) {
           res.status(500).send(err);
         }

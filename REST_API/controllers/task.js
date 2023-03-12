@@ -57,8 +57,8 @@ module.exports = {
     updateTask: async (req, res, next) => {
       const { id, title, description, assignedTo, dueDate } = req.body;
       const data = req.body;
-      console.log(data);
-      if (title && description && dueDate) {
+
+      if (id && title && description && dueDate) {
         try {
           const oldTask = await models.task
             .findOne({ _id: id })
@@ -74,7 +74,6 @@ module.exports = {
             { new: true }
           );
           if (oldTask.assignedTo._id !== assignedTo) {
-            console.log(1);
             await models.employee.findOneAndUpdate(
               { _id: oldTask.assignedTo._id },
               { $pull: { assignedTasks: { $in: id } } }

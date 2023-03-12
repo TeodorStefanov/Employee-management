@@ -6,14 +6,15 @@ export const emailValidation = (val) => {
   }
 };
 export const phoneNumberValidation = (val) => {
+  console.log(val);
   const regEx = /^[\d]{3,32}$/g;
   if (!val.match(regEx)) {
     return "Phone Number must be between 3 and 32 digits";
   }
 };
 export const salaryValidation = (val) => {
-  const regEx = /^\d*\.?\d*$/;
-  if (!val.match(regEx)) {
+  const regEx = /^\d*\.?\d*$/g;
+  if (!val.toString().match(regEx)) {
     return "Plese enter valid Salary";
   }
 };
