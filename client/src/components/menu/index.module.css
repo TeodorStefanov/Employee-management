@@ -19,16 +19,22 @@
 
 .createMenu {
   position: relative;
+  border-radius: 20px;
 }
 .createButton {
   position: relative;
   width: 74px;
   height: 24px;
-  background-color: rgb(81, 176, 226);
-  border: solid 1px rgb(81, 176, 226);
-  border-radius: 2px;
-  color: rgb(255, 255, 255);
+  background-color: white;
+  border: solid 1px white;
+  border-radius: 20px;
+  color: #052f56;
   cursor: pointer;
+  font-weight: bold;
+}
+.createButton:hover {
+  color: white;
+  background-color: #052f56;
 }
 .menu {
   position: absolute;
@@ -36,11 +42,18 @@
   width: 74px;
   height: auto;
   background-color: white;
+  border-radius: 20px;
 }
 .employeeTaskButtons {
   width: 100%;
-  background-color: rgb(81, 176, 226);
-  border: solid 1px rgb(81, 176, 226);
-  color: rgb(255, 255, 255);
+  background-color: white;
+  border: solid 2px #052f56;
+  color: #052f56;
   cursor: pointer;
+  font-weight: bold;
+  border-radius: 20px;
+}
+.employeeTaskButtons:hover {
+  color: white;
+  background-color: #052f56;
 }

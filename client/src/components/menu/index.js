@@ -1,25 +1,13 @@
-import React, { useEffect, useRef, useState } from "react";
-import getNavigation from "../../utils/navigation";
-import MenuLink from "../menuLink";
+import React, { useState } from "react";
+
 import styles from "./index.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
 const Menu = () => {
   const [openMenu, setOpenMenu] = useState(false);
-  const menuRef = useRef();
-  const links = getNavigation();
+
   const navigate = useNavigate();
-  useEffect(() => {
-    window.onclick = (event) => {
-      if (
-        event.target.contains(menuRef.current) &&
-        event.target !== menuRef.current
-      ) {
-        setOpenMenu(false);
-      }
-    };
-  }, []);
   return (
     <div className={styles.container}>
       <div>
@@ -44,7 +32,7 @@ const Menu = () => {
           Create
         </button>
         {openMenu ? (
-          <div className={styles.menu} ref={menuRef}>
+          <div className={styles.menu}>
             <button
               className={styles.employeeTaskButtons}
               onClick={() => navigate("/createEmployee")}

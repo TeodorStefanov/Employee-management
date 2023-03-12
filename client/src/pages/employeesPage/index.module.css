@@ -1,0 +1,21 @@
+.container {
+  width: 100%;
+  min-height: 100%;
+  background-color: #f1f3f4;
+}
+.title {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  font-weight: bold;
+  gap: 10px;
+  border-bottom: solid 1px #f1f3f4;
+  background-color: #f1f3f4;
+}
+.titleBox {
+  border: solid 1px white;
+  background-color: white;
+  padding: 10px;
+  box-sizing: border-box;
+  width: 15%;
+}

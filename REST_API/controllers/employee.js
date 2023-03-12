@@ -19,6 +19,14 @@ module.exports = {
         res.status(500).send({ error: "There is an error" });
       }
     },
+    getAllEmployees: async (req, res, next) => {
+      try {
+        const employees = await models.employee.find()
+        res.status(200).send(employees);
+      } catch (err) {
+        res.status(500).send({ error: "There is an error" });
+      }
+    },
     getEmployee: async (req, res, next) => {
       const employeeId = req.query.id;
       if (employeeId) {
