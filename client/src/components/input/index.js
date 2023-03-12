@@ -7,6 +7,7 @@ const Input = ({
   title,
   errorMessage,
   styleChangeWidth,
+  value,
 }) => {
   return (
     <div
@@ -21,6 +22,7 @@ const Input = ({
         className={styles.field}
         autoComplete=""
         step={0.01}
+        
       />
       <label htmlFor={name} className={styles.title}>
         {title}

@@ -21,7 +21,6 @@ module.exports = {
     },
     employee: async (req, res, next) => {
       const employeeId = req.query.id;
-      console.log(employeeId);
       if (employeeId) {
         try {
           await models.employee.findById(employeeId);
@@ -64,9 +63,8 @@ module.exports = {
             monthlySalary,
           });
 
-          res.status(200).send({message: 'Successfully create Employee'});
+          res.status(200).send({ message: "Successfully create Employee" });
         } catch (err) {
-          console.log(err);
           res.status(500).send(err);
         }
       } else {
