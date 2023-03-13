@@ -13,6 +13,11 @@ import { useNavigate } from "react-router-dom";
 import TextArea from "../../components/textarea";
 const CreateTaskPage = () => {
   const [employees, setEmployees] = useState([]);
+  const [priorityOptions, setPriorityOptions] = useState([
+    { fullname: "Low" },
+    { fullname: "Medium" },
+    { fullname: "High" },
+  ]);
   const navigate = useNavigate();
   const {
     register,
@@ -78,6 +83,15 @@ const CreateTaskPage = () => {
               title="Assigned To"
               errorMessage={errors.assignedTo ? errors.assignedTo.message : ""}
               options={employees}
+            />
+            <Select
+              name="priority"
+              formHook={register("priority", {
+                required: "This field is required",
+              })}
+              title="Priority"
+              errorMessage={errors.priority ? errors.priority.message : ""}
+              options={priorityOptions}
             />
             <Input
               name="dueDate"

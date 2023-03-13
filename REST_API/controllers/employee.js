@@ -21,7 +21,7 @@ module.exports = {
     },
     getAllEmployees: async (req, res, next) => {
       try {
-        const employees = await models.employee.find()
+        const employees = await models.employee.find();
         res.status(200).send(employees);
       } catch (err) {
         res.status(500).send({ error: "There is an error" });
@@ -63,8 +63,22 @@ module.exports = {
             return je.completedTasks.length > 0;
           })
           .slice(0, 5);
-        res.status(200).send(employees);
+        const employee = (await models.employee.find())
+          .filter((el) => {
+            return el.completedTasks.length > 0;
+          })
+          .sort((a, b) => b.completedTasks.length - a.completedTasks.length)
+          .slice(0, 1);
+
+        res.status(200).send({ employees, employee });
       } catch (err) {
+        res.status(500).send(err);
+      }
+    },
+    topEmployee: async (req, res, next) => {
+      try {
+        res.status(200).send(employee);
+      } catch {
         res.status(500).send(err);
       }
     },
@@ -145,6 +159,26 @@ module.exports = {
           );
 
           res.status(200).send({ message: "Successfully update Employee" });
+        } catch (err) {
+          res.status(500).send(err);
+        }
+      } else {
+        res.status(401).send({ error: "Please enter valid credentials" });
+      }
+    },
+  },
+  delete: {
+    deleteEmployee: async (req, res, next) => {
+      const { employeeId } = req.body;
+      if (employeeId) {
+        try {
+          await models.employee.deleteOne({ _id: employeeId });
+          await models.task.updateMany(
+            { assignedTo: employeeId },
+            { assignedTo: null }
+          );
+
+          res.status(200).send({ message: "Successfully delete Task" });
         } catch (err) {
           res.status(500).send(err);
         }

@@ -6,7 +6,7 @@ export const emailValidation = (val) => {
   }
 };
 export const phoneNumberValidation = (val) => {
-  console.log(val);
+  
   const regEx = /^[\d]{3,32}$/g;
   if (!val.match(regEx)) {
     return "Phone Number must be between 3 and 32 digits";

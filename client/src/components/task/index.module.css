@@ -25,10 +25,26 @@
   margin: 0;
   word-break: break-word;
 }
-
+.priorityDueDate {
+  display: flex;
+  justify-content: space-between;
+  margin-left: 10px;
+  margin-right: 10px;
+  box-sizing: border-box;
+  align-items: center;
+}
+.priorityGreen {
+  color: green;
+}
+.priorityYellow {
+  color: yellow;
+}
+.priorityRed {
+  color: red;
+}
 .date {
   box-sizing: border-box;
-  padding-left: 58%;
+
   margin: 0;
   color: green;
 }

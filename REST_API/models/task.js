@@ -15,6 +15,10 @@ const TaskSchema = new mongoose.Schema({
     ref: "Employee",
     required: true,
   },
+  priority: {
+    type: String,
+    required: true,
+  },
   dueDate: {
     type: Date,
     required: true,

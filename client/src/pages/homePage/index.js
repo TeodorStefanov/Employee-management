@@ -9,18 +9,20 @@ const HomePage = () => {
   const [toDoTasks, setToDoTasks] = useState([]);
   const [completedTasks, setCompletedTasks] = useState([]);
   const [topEmployees, setTopEmployees] = useState([]);
+  const [employeeFirst, setEmployeeFirst] = useState([]);
   const navigate = useNavigate();
   const getTasks = async () => {
     const promise = await fetch("http://localhost:9000/api/task/tasks");
     const response = await promise.json();
     setToDoTasks(response.filter((el) => el.completed === false).reverse());
-    setCompletedTasks(response.filter((el) => el.completed === true).reverse())
+    setCompletedTasks(response.filter((el) => el.completed === true).reverse());
     const promiseEmployeeStatistic = await fetch(
       "http://localhost:9000/api/employee/statistic"
     );
     if (promiseEmployeeStatistic.status === 200) {
       const responseEmployeeStatistic = await promiseEmployeeStatistic.json();
-      setTopEmployees(responseEmployeeStatistic);
+      setTopEmployees(responseEmployeeStatistic.employees);
+      setEmployeeFirst(responseEmployeeStatistic.employee);
     } else {
       navigate("/error");
     }
@@ -38,8 +40,13 @@ const HomePage = () => {
               return (
                 <Task
                   title={el.title}
-                  name={`${el.assignedTo.firstName} ${el.assignedTo.lastName}`}
+                  name={
+                    el.assignedTo
+                      ? `${el.assignedTo.firstName} ${el.assignedTo.lastName}`
+                      : ""
+                  }
                   key={index}
+                  priority={el.priority}
                   dueDate={el.dueDate}
                   taskId={el._id}
                 />
@@ -54,8 +61,13 @@ const HomePage = () => {
               return (
                 <Task
                   title={el.title}
-                  name={`${el.assignedTo.firstName} ${el.assignedTo.lastName}`}
+                  name={
+                    el.assignedTo
+                      ? `${el.assignedTo.firstName} ${el.assignedTo.lastName}`
+                      : ""
+                  }
                   key={index}
+                  priority={el.priority}
                   dueDate={el.dueDate}
                   taskId={el._id}
                   completedDate={el.completedDate}
@@ -65,8 +77,23 @@ const HomePage = () => {
           </div>
         </div>
         <div className={styles.toDo}>
-          <p className={styles.toDoTitle}>TOP 5 EMPLOYEES</p>
           <div className={styles.toDoTasks}>
+            <p className={styles.toDoTitle}>TOP EMPLOYEE</p>
+
+            {employeeFirst.map((el, index) => {
+              return (
+                <Employee
+                  id={el._id}
+                  name={`${el.firstName} ${el.middleNames && el.middleNames} ${
+                    el.lastName
+                  }`}
+                  key={index}
+                  completedTasks={el.completedTasks.length}
+                  isTop={true}
+                />
+              );
+            })}
+            <p className={styles.toDoTitle}>TOP 5 EMPLOYEES LAST MONTH</p>
             {topEmployees.map((el, index) => {
               return (
                 <Employee
@@ -76,8 +103,6 @@ const HomePage = () => {
                   }`}
                   key={index}
                   completedTasks={el.completedTasks.length}
-                  taskId={el._id}
-                  completedDate={el.completedDate}
                 />
               );
             })}

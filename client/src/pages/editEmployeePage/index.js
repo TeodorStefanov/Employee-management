@@ -47,7 +47,6 @@ const EditEmployeePage = () => {
   };
   const handleInputs = async (data) => {
     data["id"] = employee._id;
-    console.log(data);
     const promise = await dataService({
       method: "PUT",
       url: "employee/update",

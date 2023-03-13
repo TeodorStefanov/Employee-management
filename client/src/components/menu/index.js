@@ -1,8 +1,5 @@
 import React, { useState } from "react";
-
 import styles from "./index.module.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
 const Menu = () => {
   const [openMenu, setOpenMenu] = useState(false);
@@ -10,17 +7,15 @@ const Menu = () => {
   const navigate = useNavigate();
   return (
     <div className={styles.container}>
-      <div>
-        <FontAwesomeIcon
-          className={styles.bars}
-          icon={faBars}
-          onClick={() => setOpenMenu(true)}
-        />
-      </div>
       <nav className={styles.navigation}>
         <div className={styles.container}>
           <Link to="/employees" className={styles.link}>
             Employees
+          </Link>
+        </div>
+        <div className={styles.container}>
+          <Link to="/" className={styles.link}>
+            Tasks
           </Link>
         </div>
       </nav>

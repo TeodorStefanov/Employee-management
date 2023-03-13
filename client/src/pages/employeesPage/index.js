@@ -13,7 +13,7 @@ const EmployeesPage = () => {
     if (promise.status === 200) {
       const response = await promise.json();
       setEmployees(response);
-      console.log(response);
+      
     } else {
       navigate("/error");
     }
@@ -37,7 +37,7 @@ const EmployeesPage = () => {
             <p className={styles.titleBox}>Completed Tasks</p>
           </div>
           {employees.map((el, index) => {
-            console.log(el.completedTasks.length);
+            
             return (
               <Employees
                 id={el._id}

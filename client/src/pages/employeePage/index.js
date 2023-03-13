@@ -24,7 +24,7 @@ const EmployeePage = () => {
   } = useForm();
   const checkEmployee = async () => {
     const id = params.id;
-    console.log(id);
+    
     const promise = await fetch(
       `http://localhost:9000/api/employee/employee?id=${id}`
     );
@@ -53,7 +53,7 @@ const EmployeePage = () => {
   const handleDeleteEmployee = async () => {
     const promise = await dataService({
       method: "DELETE",
-      url: "task/delete",
+      url: "employee/delete",
       data: { employeeId: employee._id },
     });
     if (promise.status === 200) {

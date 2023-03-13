@@ -4,14 +4,10 @@ import PageLayout from "../../components/pageLayout";
 import dataService from "../../services/dataService";
 import styles from "./index.module.css";
 const TaskPage = () => {
+  const [task, setTask] = useState({});
   const [taskId, setTaskId] = useState("");
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [assignedTo, setAssignedTo] = useState("");
-  const [dueDate, setDueDate] = useState("");
   const [employeeId, setEmployeeId] = useState("");
   const [completedTask, setCompletedTask] = useState("");
-  const [completedDate, setCompletedDate] = useState("");
   const params = useParams();
   const navigate = useNavigate();
 
@@ -22,20 +18,12 @@ const TaskPage = () => {
       navigate("/error");
     } else {
       const response = await promise.json();
+      setTask(() => ({
+        ...response,
+      }));
       setTaskId(response._id);
-      setTitle(response.title);
-      setDescription(response.description);
-      setAssignedTo(
-        `${response.assignedTo.firstName} ${
-          response.assignedTo.middleNames && response.assignedTo.middleNames
-        } ${response.assignedTo.lastName}`
-      );
-      setDueDate(new Date(response.dueDate).toLocaleDateString());
       setEmployeeId(response.assignedTo._id);
       setCompletedTask(response.completed);
-      if (response.completed) {
-        setCompletedDate(new Date(response.completedDate).toLocaleDateString());
-      }
     }
   };
   const handleCompletedTask = async () => {
@@ -74,10 +62,10 @@ const TaskPage = () => {
         <div className={styles.container}>
           <div className={styles.main}>
             <p>
-              <b>Title:</b> {title}
+              <b>Title:</b> {task.title}
             </p>
             <p>
-              <b>Description:</b> {description}
+              <b>Description:</b> {task.description}
             </p>
             <p>
               <b>Assigned To:</b>{" "}
@@ -85,16 +73,25 @@ const TaskPage = () => {
                 onClick={() => navigate(`/employees/${employeeId}`)}
                 className={styles.span}
               >
-                {assignedTo}
+                {task.assignedTo
+                  ? `${task.assignedTo.firstName} ${
+                      task.assignedTo.middleNames && task.assignedTo.middleNames
+                    } ${task.assignedTo.lastName}`
+                  : ""}
               </span>
+            </p>
+            <p>
+              <b>Priority: </b>
+              {task.priority}
             </p>
             {completedTask ? (
               <p>
-                <b>Completed Date:</b> {completedDate}
+                <b>Completed Date:</b>{" "}
+                {new Date(task.completedDate).toLocaleDateString()}
               </p>
             ) : (
               <p>
-                <b>Due Date:</b> {dueDate}
+                <b>Due Date:</b> {new Date(task.dueDate).toLocaleDateString()}
               </p>
             )}
             <div className={styles.buttons}>
