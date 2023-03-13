@@ -14,8 +14,11 @@ import styles from "./index.module.css";
 const EditTaskPage = () => {
   const [task, setTask] = useState({});
   const [employees, setEmployees] = useState([]);
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+  const [priorityOptions, setPriorityOptions] = useState([
+    { fullname: "Low" },
+    { fullname: "Medium" },
+    { fullname: "High" },
+  ]);
   const navigate = useNavigate();
   const params = useParams();
   const {
@@ -42,9 +45,6 @@ const EditTaskPage = () => {
         ...response,
       }));
       reset(response);
-
-      setTitle(response.title);
-      setDescription(response.description);
     }
     const promiseEmployees = await fetch(
       "http://localhost:9000/api/employee/employees"
@@ -55,7 +55,7 @@ const EditTaskPage = () => {
     } else {
       navigate("/error");
     }
-  }
+  };
   const handleInputs = async (data) => {
     data["id"] = task._id;
     const promise = await dataService({
@@ -113,6 +113,15 @@ const EditTaskPage = () => {
               errorMessage={errors.assignedTo ? errors.assignedTo.message : ""}
               options={employees}
             />
+            <Select
+              name="priority"
+              formHook={register("priority", {
+                required: "This field is required",
+              })}
+              title="Priority"
+              errorMessage={errors.priority ? errors.priority.message : ""}
+              options={priorityOptions}
+            />
             <Input
               name="dueDate"
               formHook={register("dueDate", {
@@ -135,4 +144,4 @@ const EditTaskPage = () => {
     </PageLayout>
   );
 };
-export default EditTaskPage
+export default EditTaskPage;

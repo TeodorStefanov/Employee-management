@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./index.module.css";
-const Task = ({ title, name, dueDate, taskId, completedDate }) => {
+const Task = ({ title, name, priority, dueDate, taskId, completedDate }) => {
   const [timeStyle, setTimeStyle] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
@@ -21,13 +21,39 @@ const Task = ({ title, name, dueDate, taskId, completedDate }) => {
       <p className={styles.title}>{title}</p>
       <p className={styles.name}>Assigned to: {name}</p>
       {completedDate ? (
-        <p className={styles.date}>
-          Completed Date {new Date(completedDate).toLocaleDateString()}
-        </p>
+        <div className={styles.priorityDueDate}>
+          <p
+            className={
+              priority === "Low"
+                ? styles.priorityGreen
+                : priority === "Medium"
+                ? styles.priorityYellow
+                : styles.priorityRed
+            }
+          >
+            Priority: {priority}
+          </p>
+          <p className={styles.date}>
+            Completed Date {new Date(completedDate).toLocaleDateString()}
+          </p>
+        </div>
       ) : (
-        <p className={`${styles.date} ${timeStyle ? styles.dateColor : ""}`}>
-          Due Date {new Date(dueDate).toLocaleDateString()}
-        </p>
+        <div className={styles.priorityDueDate}>
+          <p
+            className={
+              priority === "Low"
+                ? styles.priorityGreen
+                : priority === "Medium"
+                ? styles.priorityYellow
+                : styles.priorityRed
+            }
+          >
+            Priority: {priority}
+          </p>
+          <p className={`${styles.date} ${timeStyle ? styles.dateColor : ""}`}>
+            Due Date {new Date(dueDate).toLocaleDateString()}
+          </p>
+        </div>
       )}
     </div>
   );

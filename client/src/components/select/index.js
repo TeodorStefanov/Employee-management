@@ -1,14 +1,10 @@
 import React from "react";
 import styles from "./index.module.css";
-const Select = ({ name, formHook, title, errorMessage, options, value }) => {
+const Select = ({ name, formHook, title, errorMessage, options }) => {
   return (
     <div className={styles.container}>
-      <select
-        {...formHook}
-        id={name}
-        className={styles.field}
-      >
-        <option value="DEFAULT"></option>
+      <select {...formHook} id={name} className={styles.field}>
+        <option value=""></option>
         {options.map((el, index) => {
           return (
             <option value={el.id} key={index}>

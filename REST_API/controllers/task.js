@@ -2,13 +2,14 @@ const models = require("../models");
 module.exports = {
   post: {
     create: async (req, res, next) => {
-      const { title, description, assignedTo, dueDate } = req.body;
-      if (title && description && assignedTo && dueDate) {
+      const { title, description, assignedTo, priority, dueDate } = req.body;
+      if (title && description && assignedTo && priority && dueDate) {
         try {
           const task = await models.task.create({
             title,
             description,
             assignedTo,
+            priority,
             dueDate,
           });
           await models.employee.findOneAndUpdate(
@@ -55,10 +56,10 @@ module.exports = {
   },
   put: {
     updateTask: async (req, res, next) => {
-      const { id, title, description, assignedTo, dueDate } = req.body;
-      const data = req.body;
+      const { id, title, description, assignedTo, priority, dueDate } =
+        req.body;
 
-      if (id && title && description && dueDate) {
+      if (id && title && description && priority && dueDate) {
         try {
           const oldTask = await models.task
             .findOne({ _id: id })
@@ -69,22 +70,25 @@ module.exports = {
               title,
               description,
               assignedTo,
+              priority,
               dueDate,
             },
             { new: true }
           );
-          if (oldTask.assignedTo._id !== assignedTo) {
-            await models.employee.findOneAndUpdate(
-              { _id: oldTask.assignedTo._id },
-              { $pull: { assignedTasks: { $in: id } } }
-            );
-            await models.employee.findOneAndUpdate(
-              { _id: assignedTo },
-              {
-                $addToSet: { assignedTasks: task._id },
-              },
-              { new: true }
-            );
+          if (oldTask.assignedTo) {
+            if (oldTask.assignedTo._id !== assignedTo) {
+              await models.employee.findOneAndUpdate(
+                { _id: oldTask.assignedTo._id },
+                { $pull: { assignedTasks: { $in: id } } }
+              );
+              await models.employee.findOneAndUpdate(
+                { _id: assignedTo },
+                {
+                  $addToSet: { assignedTasks: task._id },
+                },
+                { new: true }
+              );
+            }
           }
 
           res.status(200).send({ message: "Successfully update Task" });
@@ -125,16 +129,18 @@ module.exports = {
   delete: {
     deleteTask: async (req, res, next) => {
       const { taskId, employeeId } = req.body;
-      if ((taskId, employeeId)) {
+      if (taskId) {
         try {
           await models.task.deleteOne({ _id: taskId });
-          await models.employee.findOneAndUpdate(
-            { _id: employeeId },
-            {
-              $pull: { assignedTasks: { $in: taskId } },
-            },
-            { new: true }
-          );
+          if (employeeId) {
+            await models.employee.findOneAndUpdate(
+              { _id: employeeId },
+              {
+                $pull: { assignedTasks: { $in: taskId } },
+              },
+              { new: true }
+            );
+          }
 
           res.status(200).send({ message: "Successfully delete Task" });
         } catch (err) {
