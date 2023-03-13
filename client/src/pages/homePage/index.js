@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import Employee from "../../components/employee";
 import PageLayout from "../../components/pageLayout";
 import Task from "../../components/task";
-import getNavigation from "../../utils/navigation";
 import styles from "./index.module.css";
 const HomePage = () => {
   const [toDoTasks, setToDoTasks] = useState([]);

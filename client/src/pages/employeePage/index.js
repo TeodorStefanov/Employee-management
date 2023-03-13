@@ -1,14 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PageLayout from "../../components/pageLayout";
 import styles from "./index.module.css";
-import { useForm } from "react-hook-form";
-import Input from "../../components/input";
-import {
-  dateOfBirthValidation,
-  emailValidation,
-  phoneNumberValidation,
-  salaryValidation,
-} from "../../utils/inputValidationsEmployee";
 import dataService from "../../services/dataService";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -17,14 +9,9 @@ const EmployeePage = () => {
   const [tasksOfEmployee, setTasksOfEmployee] = useState([]);
   const navigate = useNavigate();
   const params = useParams();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
   const checkEmployee = async () => {
     const id = params.id;
-    
+
     const promise = await fetch(
       `http://localhost:9000/api/employee/employee?id=${id}`
     );
@@ -38,18 +25,7 @@ const EmployeePage = () => {
       navigate("/error");
     }
   };
-  const handleInputs = async (data) => {
-    const promise = await dataService({
-      method: "POST",
-      url: "employee/create",
-      data: data,
-    });
-    if (promise.status === 200) {
-      navigate("/");
-    } else {
-      navigate("/error");
-    }
-  };
+
   const handleDeleteEmployee = async () => {
     const promise = await dataService({
       method: "DELETE",
